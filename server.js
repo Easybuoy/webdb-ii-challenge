@@ -8,6 +8,6 @@ server.use(express.json());
 server.get("/", (req, res) => {
   return res.json({ status: "success", message: "Welcome to Car Dealer API" });
 });
-server.use("/api/cardealer", carDealerRoutes);
+server.use("/api/cardealers", carDealerRoutes);
 
 module.exports = server;

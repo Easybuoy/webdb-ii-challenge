@@ -8,8 +8,8 @@ const getById = async id => {
   return await db("car_dealer").where({ id });
 };
 
-const insert = async account => {
-  return await db("car_dealer").insert(account);
+const insert = async car => {
+  return await db("car_dealer").insert(car);
 };
 
 const remove = async id => {
@@ -18,9 +18,16 @@ const remove = async id => {
     .delete();
 };
 
+function update(id, updatedCar) {
+    return db('car_dealer')
+      .where({ id })
+      .update(updatedCar);
+  }
+
 module.exports = {
   get,
   getById,
   insert,
-  remove
+  remove,
+  update
 };

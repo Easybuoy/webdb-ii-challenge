@@ -61,4 +61,33 @@ Router.delete("/:id", async (req, res) => {
     .json({ status: "error", message: "Unable to delete car" });
 });
 
+Router.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const { vin, make, model, mileage } = req.body;
+  if (!vin && !make && !model && !mileage) {
+    return res.status(400).json({
+      status: "error",
+      message: "vin, make, model and mileage fields are required"
+    });
+  }
+
+  const car = await CarDealers.getById(id);
+
+  if (car.length === 0) {
+    return res.status(404).json({ status: "error", message: "Car not found" });
+  }
+  const updatedCar = await CarDealers.update(id, { vin, make, model, mileage });
+
+  if (updatedCar == 1) {
+    return res.json({
+      status: "success",
+      message: "Car updated successfully"
+    });
+  }
+
+  return res
+    .status(500)
+    .json({ status: "error", message: "Unable to update car" });
+});
+
 module.exports = Router;
